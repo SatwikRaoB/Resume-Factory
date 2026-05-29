@@ -1,4 +1,4 @@
-# Resume Tailor AI – User Guide
+# Resume Factory AI – User Guide
 
 ## 📌 Introduction
 Resume Tailor AI is a locally hosted automation tool that helps you tailor your resume for specific job descriptions using **Google Gemini AI**. It includes:
