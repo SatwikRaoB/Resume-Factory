@@ -1,0 +1,180 @@
+/* CSS to replicate the resume style with a full border */
+
+/* This rule controls the margins and page size for printing */
+@page {
+    size: letter;
+    /* Changed from A4 to Letter */
+    margin-top: 0.5in;
+    margin-bottom: 0.5in;
+    margin-left: 0.5in;
+    margin-right: 0.5in;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #222;
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.resume-container {
+    font-family: inherit;
+    max-width: none;
+    margin: 0 auto;
+    /* Center on screen */
+    padding-left: 0;
+    padding-right: 0;
+    box-sizing: border-box;
+    /* No border here */
+}
+
+a {
+    color: #0000EE;
+    /* Default link color */
+    text-decoration: underline;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* Add a subtle horizontal rule below the header, and section titles */
+.header {
+    text-align: left;
+    margin-bottom: 8px;
+    padding-bottom: 0;
+}
+
+.header h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    font-variant: small-caps;
+    margin: 0;
+    padding: 0;
+    letter-spacing: 1px;
+    color: #111;
+    line-height: 1.0;
+}
+
+.header .contact-info {
+    font-size: 10pt;
+    /* Approximates \small */
+    margin-top: 1pt;
+}
+
+.section {
+    margin-top: 15px;
+}
+
+.section-title {
+    font-size: 1.2em;
+    /* Approximates \large */
+    font-weight: bold;
+    /* \scshape is not bold by default */
+    font-variant: small-caps;
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 5px;
+    padding-bottom: 2pt;
+    border-bottom: 1px solid #888;
+    color: #111;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0.15in;
+    margin: 0;
+}
+
+.experience-list>li,
+.education-list>li {
+    margin-bottom: 15px;
+}
+
+.subheading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: -5pt;
+}
+
+.subheading .title-company {
+    text-align: left;
+}
+
+.subheading .date-location {
+    text-align: right;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+.subheading strong {
+    font-weight: bold;
+    color: #111;
+}
+
+.subheading em {
+    font-style: italic;
+    font-size: 10pt;
+    /* Approximates \small */
+}
+
+.item-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.item-list li {
+    position: relative;
+    padding-left: 15px;
+    /* Space for the bullet */
+    font-size: 10pt;
+    /* Approximates \small */
+    margin-bottom: 4pt;
+}
+
+.item-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.8em;
+    /* Approximates \tiny bullet */
+}
+
+.professional-summary ul,
+.technical-skills ul {
+    padding-left: 0.15in;
+}
+
+.professional-summary li {
+    font-weight: normal;
+    color: #222;
+}
+
+.technical-skills li {
+    margin-bottom: 5px;
+}
+
+/* Remove the visible border from the resume container for print */
+@media print {
+    .resume-container {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    body {
+        background: #fff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}

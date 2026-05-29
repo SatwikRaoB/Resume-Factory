@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="bg-gray-100 font-sans text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b border-gray-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <span class="font-bold text-lg">System Configuration</span>
+            <a href="/dashboard" class="text-blue-600 hover:underline text-sm font-medium flex items-center">
+                <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-6 py-8 max-w-3xl">
+
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-8 space-y-8">
+
+            <!-- Save Directory Section -->
+            <div>
+                <label class="block text-gray-800 font-bold mb-2">Output Directory</label>
+                <p class="text-xs text-gray-500 mb-2">Where should the HTML files and resume.css be saved?</p>
+                <div class="flex gap-2">
+                    <input type="text" id="saveDirectory"
+                        class="w-full bg-gray-50 border border-gray-300 rounded p-3 text-sm font-mono text-gray-600 shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="e.g., C:\Users\Satwik\Resumes">
+                    <button onclick="browseFolder()"
+                        class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded border border-gray-300 font-medium transition shadow-sm">
+                        Browse...
+                    </button>
+                </div>
+            </div>
+
+            <!-- API Key -->
+            <div>
+                <label class="block text-gray-800 font-bold mb-2">Gemini API Key</label>
+                <input type="password" id="apiKey"
+                    class="w-full bg-gray-50 border border-gray-300 rounded p-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm"
+                    placeholder="Enter your API Key">
+            </div>
+
+            <!-- Master Resume -->
+            <div>
+                <label class="block text-gray-800 font-bold mb-2">Master Resume Data</label>
+                <p class="text-xs text-gray-500 mb-2">Paste your full master resume text/markdown here.</p>
+                <textarea id="baseResume"
+                    class="w-full bg-gray-50 border border-gray-300 rounded p-3 h-48 font-mono text-sm focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm"></textarea>
+            </div>
+
+            <!-- System Instructions -->
+            <div>
+                <label class="block text-gray-800 font-bold mb-2">Gemini Instructions</label>
+                <p class="text-xs text-gray-500 mb-2">The system prompt used for tailoring.</p>
+                <textarea id="geminiInstruction"
+                    class="w-full bg-gray-50 border border-gray-300 rounded p-3 h-32 font-mono text-sm focus:ring-2 focus:ring-blue-500 outline-none transition shadow-sm"></textarea>
+            </div>
+
+            <!-- Save Action -->
+            <div class="pt-4 border-t border-gray-100">
+                <button onclick="saveConfig()"
+                    class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold w-full shadow transition flex justify-center items-center gap-2">
+                    <i class="fas fa-save"></i> Save Configuration
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load initial data when page opens
+        loadConfig();
+
+        async function loadConfig() {
+            try {
+                const res = await fetch('/api/config');
+                if (!res.ok) throw new Error("Server error");
+                const data = await res.json();
+
+                document.getElementById('baseResume').value = data.base_resume || '';
+                document.getElementById('geminiInstruction').value = data.gemini_instruction || '';
+                document.getElementById('apiKey').value = data.api_key || '';
+                document.getElementById('saveDirectory').value = data.save_directory || '';
+            } catch (e) {
+                console.log("Backend unavailable - viewing static template.");
+            }
+        }
+
+        async function browseFolder() {
+            const btn = event.target;
+            const originalText = btn.innerText;
+            btn.innerText = "...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/api/browse_folder', { method: 'POST' });
+                const data = await res.json();
+                if (data.path) {
+                    document.getElementById('saveDirectory').value = data.path;
+                }
+            } catch (e) {
+                alert("Could not open dialog. Please paste path manually.");
+            } finally {
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        async function saveConfig() {
+            const data = {
+                base_resume: document.getElementById('baseResume').value,
+                gemini_instruction: document.getElementById('geminiInstruction').value,
+                api_key: document.getElementById('apiKey').value,
+                save_directory: document.getElementById('saveDirectory').value
+            };
+
+            const btn = document.querySelector('button[onclick="saveConfig()"]');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+
+            try {
+                await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                alert("Settings Saved!");
+            } catch (e) {
+                alert("Failed to save settings (Backend Offline).");
+            } finally {
+                btn.innerHTML = originalHTML;
+            }
+        }
+    </script>
+</body>
+
+</html>

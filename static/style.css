@@ -1,0 +1,282 @@
+/* --- CSS VARIABLES FOR THEMING --- */
+:root {
+    --bg-body: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #cbd5e1;
+    --border-hover: #94a3b8;
+    --input-bg: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] {
+    --bg-body: #0f172a;
+    --bg-card: #1e293b;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --border-hover: #475569;
+    --input-bg: #334155;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* --- DARK MODE FORM FIXES --- */
+[data-theme="dark"] select {
+    background-color: var(--input-bg);
+    color: var(--text-main);
+}
+
+[data-theme="dark"] select option {
+    background-color: #1e293b;
+    /* Ensure dropdown options are dark */
+    color: #f1f5f9;
+}
+
+/* --- SCROLLBARS --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* --- CARD & LAYOUT --- */
+.card-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.card-container:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 8px 12px -3px var(--shadow-color);
+    transform: translateY(-1px);
+}
+
+/* --- INPUTS --- */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.input-field {
+    flex-grow: 1;
+    border: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: monospace;
+    outline: none;
+    color: var(--text-main);
+    background: var(--input-bg);
+}
+
+.input-suffix {
+    background-color: var(--bg-body);
+    color: var(--text-muted);
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-family: monospace;
+    border-left: 1px solid var(--border-color);
+}
+
+/* --- BUTTONS --- */
+.actions-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.btn-icon-green,
+.btn-preview,
+.btn-vscode,
+.btn-chat,
+.btn-rewrite,
+.btn-pdf,
+.btn-base {
+    font-weight: 600;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.btn-base {
+    border: 1px solid var(--border-color);
+}
+
+/* Default base style */
+
+.btn-icon-green {
+    background-color: #10b981;
+    color: white;
+    border: 1px solid #059669;
+}
+
+.btn-icon-green:hover {
+    background-color: #059669;
+}
+
+.btn-preview {
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+}
+
+.btn-preview:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+.btn-vscode {
+    color: #334155;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+}
+
+.btn-vscode:hover {
+    background: #e2e8f0;
+    border-color: #94a3b8;
+}
+
+.btn-chat {
+    color: #7c3aed;
+    background: #f5f3ff;
+    border: 1px solid #ddd6fe;
+}
+
+.btn-chat:hover {
+    background: #ede9fe;
+    border-color: #c4b5fd;
+}
+
+.btn-rewrite {
+    color: #d97706;
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+}
+
+.btn-rewrite:hover {
+    background: #ffedd5;
+    border-color: #fdba74;
+}
+
+.btn-pdf {
+    background-color: #2563eb;
+    color: white;
+    border: 1px solid #1d4ed8;
+    margin-left: auto;
+}
+
+.btn-pdf:hover {
+    background-color: #1d4ed8;
+    border-color: #1e40af;
+}
+
+/* --- PDF DRAWER --- */
+#pdf-canvas-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.drawer {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pdf-page {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    max-width: 95%;
+    height: auto;
+    border: 1px solid #e2e8f0;
+}
+
+/* --- CHAT --- */
+.chat-msg {
+    padding: 10px 14px;
+    border-radius: 8px;
+    max-width: 85%;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.chat-msg-user {
+    background-color: #2563eb;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+
+.chat-msg-bot {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+    border: 1px solid var(--border-color);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* --- GEMINI ANIMATION --- */
+.gemini-text-effect {
+    background: linear-gradient(to right, #2563eb, #9333ea, #db2777, #2563eb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: shine 3s linear infinite;
+    font-weight: 700;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
