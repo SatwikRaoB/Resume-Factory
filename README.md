@@ -148,3 +148,6 @@ The app remembers your preference.
 | **Styles not loading** | Hard refresh (`Ctrl + Shift + R`) or restart the Python app. |
 
 ---
+
+## Dashboard Screenshot
+<img width="1799" height="1045" alt="image" src="https://github.com/user-attachments/assets/87a789e4-9aee-46bb-8e05-7dc50e659213" />
